@@ -19,8 +19,8 @@ function login():void{
         SwitchToChat.value = true;
         setTimeout(()=>{
             console.log("redirecting")
-            // router.push({path:"/chat"})
-        },2000)
+            router.push({path:"/chat"})
+        },1000)
 
     },2000)
 }
@@ -89,6 +89,7 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
 .loading-state-transition{
     animation-name: loading-transition;
     animation-duration: 0.6s;    
+    animation-fill-mode: forwards;
 }
 
 @keyframes loading-transition {
@@ -104,23 +105,24 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
     animation-name:switch-to-chat;
     animation-duration:0.7s;
     animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-    position:absolute;
+    /* position:absolute; */
+    animation-fill-mode: forwards;
 }
 
 @keyframes switch-to-chat {
     from{
-        transform: scale(1);
+        /* transform: scale(1); */
     }
 
-    /* 75%{
-        transform: scale(0.1);
+    75%{
+        /* transform: scale(0.3); */
         
-
-    } */
+        /* transform: translate(-75%,-75%); */
+    }
     to{
 
-        transform: scale(0) ;
-        /* transform: translate(-100%,-100%); */
+        /* transform: scale(0) ; */
+        transform: translate(-100%,-100%) scale(0);
         /* display:none; */
     }
 }
