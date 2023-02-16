@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import {onMounted, reactive} from "vue"
 import InputField from "./InputField.vue"
+import Loading from "../Loading/Loading.vue";
 import type { FormInfo } from "./Form";
 
 
@@ -26,7 +27,8 @@ onMounted(()=>{
 
 
 <template>
-    
+
+
 <InputField v-for="i in FormInfos" :input="i"/>
 </template>
 

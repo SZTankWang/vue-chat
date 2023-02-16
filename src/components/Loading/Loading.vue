@@ -28,12 +28,15 @@ watch(props,(newProp)=>{
 </script> 
 
 <template>
-<div :class="{isLoading:isLoading,isResult:isResult,failed:failed}">
+<div class="loading-container" :class="{isLoading:isLoading,isResult:isResult,failed:failed}">
     {{ props.state }}
 </div>
 </template>
 
 <style scoped>
+.loading-container{
+    margin-top:32px;
+}
 .isLoading{
     animation-name: loading;
     animation-duration: 0.6s;

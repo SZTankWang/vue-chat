@@ -33,7 +33,6 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
     <p class="header">Chatroom</p>
     <!-- loading -->
     <Loading :state="LoadingState"/>
-
     <!-- image -->
     <!-- input field -->
     <div :class="{'form-wrapper':true,'loading-state-transition':LoadingStateTransition}">
@@ -81,6 +80,7 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top:128px;
     /* transition:all 0.4s ease; */
     
     /* position:absolute;
