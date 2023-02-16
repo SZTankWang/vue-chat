@@ -1,11 +1,16 @@
 :root{
-    --main-color:#Dec822;
-    --font-color:#2238de;
+    --main-color:#fff;
+    --font-color:#42b883;
+    --light-grey:#Cfd4d4
+}
+p{
+    margin:0;
 }
 
 body{
     height:100vh;
     margin:0;
+    font-family: sans-serif;
 }
 
 #app{
@@ -20,4 +25,9 @@ body{
 
 label{
     text-align: center;
+}
+
+.base-shadow-div{
+    filter:drop-shadow(4px 4px 6px #Cfd4d4)
+    
 }

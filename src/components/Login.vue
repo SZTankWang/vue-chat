@@ -29,7 +29,7 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
 </script>
 
 <template>
-  <div class="login-container" :class="{'SwitchToChat':SwitchToChat}">
+  <div class="login-container base-shadow-div" :class="{'SwitchToChat':SwitchToChat}">
     <p class="header">Chatroom</p>
     <!-- loading -->
     <Loading :state="LoadingState"/>
@@ -73,6 +73,7 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
   flex-direction: column;
   align-items: center;
   padding:0.8rem;
+
 
 }
 

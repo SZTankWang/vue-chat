@@ -24,7 +24,7 @@ const props = defineProps<{input:FormInfo}>();
     /* max-width:75%; */
     width:20rem;
     height:2rem;
-    border:1px solid transparent;
+    border:1px solid #Cfd4d4;
     border-radius:3px;
 }
 
