@@ -2,50 +2,60 @@
 import Form from './Form/Form.vue';
 import Button from './Button/Button.vue';
 import Loading from "./Loading/Loading.vue"
-import {ref} from "vue"
+import {ref,watch} from "vue"
 import type {Ref} from "vue"
 import { computed } from '@vue/reactivity';
 import {useRouter} from "vue-router"
 import type {Router} from "vue-router"
+import { useLoginStore } from '@/stores/LoginStore';
 
-const LoadingState:Ref<string> = ref("")
-const SwitchToChat:Ref<boolean> = ref(false)
 const router:Router = useRouter()
+//submit flag, interact with form component
+const toSubmit:Ref<boolean> = ref(false)
+
+const loginState = useLoginStore()
+//control login animation
+const switchLogin:Ref<boolean> = ref(false)
+watch(()=>loginState.isSuccess,()=>{
+    if(loginState.isSuccess){
+        console.log("switching animation")
+        switchLogin.value=true;
+        setTimeout(()=>router.push("/chat"),1000)
+
+
+    }
+})
 
 function login():void{
-    LoadingState.value = "Loading"
-    setTimeout(()=>{
-        LoadingState.value="Success"
-        SwitchToChat.value = true;
-        setTimeout(()=>{
-            console.log("redirecting")
-            router.push({path:"/chat"})
-        },1000)
 
-    },2000)
+    //submit flag
+    toSubmit.value = true;
+
+    //consume loading state from loginstore 
+
 }
-
-const LoadingStateTransition = computed(()=>LoadingState.value !=="")
 </script>
 
 <template>
-  <div class="login-container base-shadow-div" :class="{'SwitchToChat':SwitchToChat}">
+  <div class="login-container base-shadow-div" :class="{'SwitchToChat':switchLogin}">
     <p class="header">Chatroom</p>
     <!-- loading -->
-    <Loading :state="LoadingState"/>
+    <Loading />
     <!-- image -->
     <!-- input field -->
-    <div :class="{'form-wrapper':true,'loading-state-transition':LoadingStateTransition}">
+    <div :class="{'form-wrapper':true,'loading-state-transition':loginState.isLoading}">
         <Form :FormInfos="[
-        {field:'username',value:''}
+        {field:'username',value:''},
+        {field:'password',value:''}
 
-    ]"/>
+    ]" :toSubmit="toSubmit"/>
 
-    <!-- button -->
-    <Button 
+        <!-- button -->
+        <Button 
     :buttonProps="{text:'Login'}"
     @click="login"
     />
+
 
     </div>
 
@@ -80,7 +90,7 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top:128px;
+    margin-top:28px;
     /* transition:all 0.4s ease; */
     
     /* position:absolute;
@@ -98,7 +108,7 @@ const LoadingStateTransition = computed(()=>LoadingState.value !=="")
         transform: translateY(0);
     }
     to{
-        transform: translateY(1rem);
+        transform: translateY(0.3rem);
     }
 }
 

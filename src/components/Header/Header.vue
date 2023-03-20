@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { useOnlineStore } from '@/stores/onlineStore';
+
+const onlineStore = useOnlineStore()
+
 </script>
 
 <template>
     <div class="header-container">
         <div class="icon">
-
+            <div class="status" :class="{
+                online:onlineStore.isOnline,
+                offline:!onlineStore.isOnline
+                }">                
+            </div>
         </div>
         <div class="time">
 
@@ -15,6 +23,7 @@
 
 
 <style scoped>
+@import "@/assets/base.css";
     .header-container{
         height:3rem;
         position:relative;
@@ -28,7 +37,24 @@
         left:16px;
         background-color: antiquewhite;
     }
+    .status{
+        width:5px;
+        height:5px;
+        border-radius: 50%;
+        position:relative;
+        top: 79%;
+        left: 90%;
+    }
+    .offline{
+        background-color:var(--light-grey) ;
+        transition:all 0.8s ease;
+        
+    }
+    .online{
+        background-color:var( --font-color) ;
+        transition:all 0.8s ease;
 
+    }
     .time{
         width:25%;
         height:50%;

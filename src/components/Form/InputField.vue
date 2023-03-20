@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import type { FormInfo } from './Form';
-const props = defineProps<{input:FormInfo}>();
+const props = defineProps<{
+    input:FormInfo,
+   
+
+}>();
 
 </script>
 
 <template>
 <label>{{ input.field }}
-    <input class="form-input" type="text">
+    <input :id="input.inputId" class="form-input" type="text">
 
 </label>
 </template>

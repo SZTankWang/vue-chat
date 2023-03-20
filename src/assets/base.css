@@ -1,7 +1,9 @@
 :root{
     --main-color:#fff;
     --font-color:#42b883;
-    --light-grey:#Cfd4d4
+    --light-grey:#f3f2f2;
+    --deep-grey:#dedbdb;
+
 }
 p{
     margin:0;

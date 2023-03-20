@@ -1,18 +1,37 @@
 <script setup lang="ts">
+import { useOnlineStore } from '@/stores/onlineStore';
+import { onMounted } from 'vue';
+
+const onlineStore = useOnlineStore()
+
 const props = defineProps<{
     avatar?:File,
     name:string,
+    _id:string,
     date?:string,
     lastMessage?:string
 }>()
 
 
+//onclick: dispatch setTalkingto action 
+function clickHandler(e:Event){
+    let talkingTo = (e.currentTarget as Element).getAttribute("data-contact-id")!;
+    //console.log(talkingTo)
+    onlineStore.setTalkingTo(talkingTo)
+}
 
+onMounted(()=>{
+    console.log(props._id)
+})
 </script>
 
 
 <template>
-    <div class="contact-container">
+    <div
+    class="contact-container"
+    :data-contact-id="props._id"
+    @click="clickHandler"
+    >
         <!-- 头像 -->
         <div class="contact-column">
             <div class="icon">
@@ -22,7 +41,7 @@ const props = defineProps<{
         <div class="contact-column text-part">
             <!-- 名称 -->
             <div class="contact-row">
-                <p class="name">name</p>
+                <p class="name">{{ props.name }}</p>
                 <p class="time">today</p>
             </div>
 

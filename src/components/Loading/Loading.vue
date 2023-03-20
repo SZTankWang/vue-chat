@@ -3,33 +3,38 @@
 <script setup lang="ts">
 import {watch,ref} from "vue"
 import type {Ref} from "vue"
-//prop: 状态
-const props = defineProps<{state:string}>()
-const isLoading:Ref<boolean> = ref(false)
-const isResult:Ref<boolean> = ref(false)
-const failed:Ref<boolean> = ref(false)
+import { useLoginStore } from "@/stores/LoginStore";
 
-watch(props,(newProp)=>{
-    // console.log("state changed")
-    if(newProp.state !== "Loading"){
-        isResult.value = true;
-        isLoading.value = false;
-        
-    }
-    else{
-        isLoading.value = true;
-        isResult.value = false;
-        failed.value = false;
-    }
-    if(newProp.state === "Failed"){
-        failed.value = true;
+
+const loginState = useLoginStore()
+
+const isLoading:Ref<boolean> = ref(false)
+const isSuccess:Ref<boolean> = ref(false)
+const isFailed:Ref<boolean> = ref(false)
+loginState.$subscribe((mutation,state)=>{
+    switch(state.currState){
+        case "Loading":
+            isLoading.value = true;
+            break 
+        case "Welcome":
+            isLoading.value = false;
+            isSuccess.value = true;
+            break 
+        case "Failed":
+            isLoading.value = false;
+            isFailed.value = true 
     }
 })
+
 </script> 
 
 <template>
-<div class="loading-container" :class="{isLoading:isLoading,isResult:isResult,failed:failed}">
-    {{ props.state }}
+<div class="loading-container" :class="{
+    isLoading:isLoading,
+    isResult:isSuccess,
+    failed:isFailed
+    }" >
+    {{ loginState.currLoginState }}
 </div>
 </template>
 
