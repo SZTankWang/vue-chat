@@ -9,19 +9,24 @@ const props = defineProps<{
     name:string,
     _id:string,
     date?:string,
-    lastMessage?:string
+    lastMessage?:string,
+    isCurrentConvo:boolean
 }>()
 
 
 //onclick: dispatch setTalkingto action 
 function clickHandler(e:Event){
-    let talkingTo = (e.currentTarget as Element).getAttribute("data-contact-id")!;
+    let talkingTo = props._id;
     //console.log(talkingTo)
-    onlineStore.setTalkingTo(talkingTo)
+    //切换对话
+    if(props._id !== onlineStore.getTalkingTo){
+        onlineStore.setTalkingTo(talkingTo)
+
+    }
 }
 
 onMounted(()=>{
-    console.log(props._id)
+    //console.log(props._id)
 })
 </script>
 
@@ -29,6 +34,7 @@ onMounted(()=>{
 <template>
     <div
     class="contact-container"
+    :class="{'active':props.isCurrentConvo}"
     :data-contact-id="props._id"
     @click="clickHandler"
     >
@@ -63,7 +69,9 @@ onMounted(()=>{
     user-select: none;
 
 }
-
+.active{
+    background-color: var(--deep-grey);
+}
 .contact-container:hover{
     cursor:pointer;
     background:#E8ecec

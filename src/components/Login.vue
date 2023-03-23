@@ -68,7 +68,8 @@ function login():void{
 .login-container{
   min-width:75%;
   width:fit-content;
-  height:50%;
+  min-height:50%;
+  height:fit-content;
   background-color:var(--main-color);
   position:absolute;
   left:0;

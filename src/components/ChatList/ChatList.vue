@@ -5,13 +5,13 @@ import { TransitionGroup } from 'vue';
 import Spinner from '../Spinner/Spinner.vue';
 import Contact from '../Contact/Contact.vue';
 import type { user } from '@/Type';
+import { useOnlineStore } from '@/stores/onlineStore';
 
 const props = defineProps<{
     selectedChat:user[]
 }>()
 const isLoading = ref(true)
-const spinnerClass = computed(()=>isLoading.value?"fadein":"fadeout")
-const contactCount = ref(0) //temp placeholder
+const onlineStore = useOnlineStore();
 
 onMounted(()=>{
     //loading state, load contacts
@@ -32,7 +32,8 @@ onMounted(()=>{
             <Contact v-for="i of props.selectedChat"
          :_id="i._id"
         :name="i.username"    
-        :key="i._id"     
+        :key="i._id"
+        :is-current-convo="i._id == onlineStore.getTalkingTo"     
          />
 
         </TransitionGroup> 

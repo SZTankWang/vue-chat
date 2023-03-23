@@ -11,9 +11,9 @@ import type { user } from '@/Type';
 import { createWS } from './Tool/Websocket';
 
 const onlineStore = useOnlineStore()
-
 const showSearch = ref(false)
 const selectedChat:{data:user[]} = reactive({data:[]})
+
 
 let ctrl = false 
 
@@ -88,7 +88,9 @@ onUnmounted(()=>{
                 <!-- chat list -->
                 <ChatList :selected-chat="selectedChat.data"/>
                 <!-- chat -->
-                <ChatContent/>
+                <ChatContent 
+                v-if="onlineStore.getTalkingTo!==''" 
+                :current-talking="onlineStore.getTalkingTo"/>
 
     </div>
     <div class="prompt">
@@ -103,7 +105,8 @@ onUnmounted(()=>{
 <style scoped>
 @import "../assets/base.css";
 .chat-container{
-    height:672px;
+    height:80%;
+    min-height: 512px;
     width:80%;
     background:var(--main-color);
     position:absolute;
@@ -135,9 +138,11 @@ onUnmounted(()=>{
 }
 
 .prompt{
-    position:relative;
-    top:84px;
-    left:35%;
+    position: fixed;
+    bottom: 0rem;
+    left: 0;
+    right: 0;
+    margin: auto;
     width:fit-content;
     font-size:1.3rem;
     color:var(--deep-grey)

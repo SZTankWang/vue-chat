@@ -1,10 +1,13 @@
 import {chatURL} from "@/Constants";
-import {useOnlineStore} from "@/stores/onlineStore"
-
+import {useOnlineStore} from "@/stores/onlineStore";
+import {useMessageStore} from "@/stores/messageStore";
+import {parseMessage} from "@/components/Tool/Tool"
 //管理websocket实例
 let ws:WebSocket|null=null;
 let onlineStore = useOnlineStore();
 
+//消息store
+const messageStore = useMessageStore();
 export function createWS(){
     ws = new WebSocket(chatURL)
     
@@ -22,11 +25,15 @@ export function createWS(){
 
     ws.onmessage= (event)=>{
         console.log(event.data)
+        //将解析后的新消息加入messageStore中
+        let data = parseMessage(event.data);
+        messageStore.pushMessage(data.from,data);
     }
 }
 
 export function sendMessage(msg:string){
     ws?.send(msg);
+    
 }
 
 export function closeWS(){
