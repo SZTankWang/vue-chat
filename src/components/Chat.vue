@@ -18,7 +18,7 @@ const selectedChat:{data:user[]} = reactive({data:[]})
 let ctrl = false 
 
 //keydown handler
-function keydownHandler(event){
+function keydownHandler(event:KeyboardEvent){
     if(event.ctrlKey){
             console.log("ctrl")
             ctrl = true 
@@ -30,8 +30,8 @@ function keydownHandler(event){
         }
 }
 
-function clickHandler(event){
-    if(showSearch.value && event.target.className=="modal" ){
+function clickHandler(event:Event){
+    if(showSearch.value && (event.target as Element).className=="modal" ){
         showSearch.value = false;
     }
 }
