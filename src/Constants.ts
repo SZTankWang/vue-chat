@@ -1,4 +1,4 @@
-export let serverURL:string = "http://127.0.0.1:3000";
+export let serverURL:string = "http://124.71.215.230/api/chat";
 
-export let chatURL:string = "ws://127.0.0.1:3000/chat";
+export let chatURL:string = "ws://124.71.215.230/api/chat/chat";
 export let secretPhrase:string = "myphrase"
