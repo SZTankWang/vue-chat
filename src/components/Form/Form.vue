@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import {onBeforeMount, onMounted, reactive,watch} from "vue"
 import type {Ref} from "vue"
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import type {Router} from "vue-router";
 import InputField from "./InputField.vue"
@@ -12,10 +13,10 @@ import axios from "axios";
 
 import {useLoginStore} from "@/stores/LoginStore"
 import { useOnlineStore } from "@/stores/onlineStore";
+import Button from "../Button/Button.vue";
 
 const props = defineProps<{
-    FormInfos:FormInfo[],
-    toSubmit:boolean
+    FormInfos:FormInfo[]
 }>()
 
 //存储form信息
@@ -25,18 +26,21 @@ const FormStore:FormInfo[] = []
 const loginState = useLoginStore()
 //存储用户身份
 const onlineStore = useOnlineStore()
-//是否submit
-watch(props,(oldVal,newVal)=>{
-    console.log(newVal)
-    if(newVal.toSubmit){
-        loginState.setLoginState("Loading")
+
+const btnDisabled = ref(false);
+function login(){
+    btnDisabled.value = true;
+    loginState.setLoginState("Loading")
         //get form data
         let data = getFormData();
         axios({
             method:"post",
             url:serverURL+"/authenticate",
             data:data ,
-            withCredentials:true
+            withCredentials:true,
+            validateStatus:function(status){
+                return status<500;
+            }
 
         }).then(res=>{
             if(res.status==200){
@@ -46,12 +50,33 @@ watch(props,(oldVal,newVal)=>{
                 loginState.setLoginState("Welcome") 
                 onlineStore.setId(res.data.id)
             }
-            else{
-                loginState.setLoginState("Error")
+            else if(res.status==404){
+                console.log("non exist, now registering")
+                loginState.setLoginState("Registering..")
+                axios({
+                    method:"post",
+                    url:serverURL+"/register",
+                    data:data,
+                    withCredentials:true
+                }).then(res=>{
+                    if(res.status==200){
+                        loginState.setLoginState("Welcome")
+                        onlineStore.setId(res.data.id)
+
+                    }
+                    else{
+                        console.log("server error")
+                    }
+                })
             }
+            else if(res.status==401){
+                loginState.setLoginState("Wrong Password")
+            }
+        }).finally(()=>{
+            btnDisabled.value=false 
         })
-    }
-})
+}
+
 
 onBeforeMount(()=>{
     props.FormInfos.map((x,idx)=>FormStore.push({
@@ -84,7 +109,11 @@ const getFormData = ()=>{
 
 
 <InputField v-for="i in FormStore" :input="i"  />
-
+    <!-- button -->
+        <Button 
+    :buttonProps="{text:'Login',disabled:btnDisabled}"
+    @click="login"
+    />
 </template>
 
 

@@ -17,7 +17,7 @@ export const useLoginStore = defineStore("login",{
             return state.currState=="Welcome" 
         },
         isFailed:(state)=>{
-            return state.currState=="Failed"
+            return state.currState=="Wrong Password"
         }
 
     },

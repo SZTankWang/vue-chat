@@ -16,6 +16,7 @@ const height = props.buttonProps.width===undefined?
 <template>
 <div
 class="button" 
+:class="{'disabled':props.buttonProps.disabled}"
 :style="{height:`${height}rem`,width:`${width}rem`}"
 >
 
@@ -45,6 +46,10 @@ class="button"
 .button:active{
     transform: scale(1.25);
     
+}
+
+.disabled{
+    pointer-events: none;
 }
 p{  
     left: 0;

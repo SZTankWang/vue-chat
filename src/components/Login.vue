@@ -26,14 +26,7 @@ watch(()=>loginState.isSuccess,()=>{
     }
 })
 
-function login():void{
 
-    //submit flag
-    toSubmit.value = true;
-
-    //consume loading state from loginstore 
-
-}
 </script>
 
 <template>
@@ -48,13 +41,9 @@ function login():void{
         {field:'username',value:''},
         {field:'password',value:''}
 
-    ]" :toSubmit="toSubmit"/>
+    ]" />
 
-        <!-- button -->
-        <Button 
-    :buttonProps="{text:'Login'}"
-    @click="login"
-    />
+
 
 
     </div>

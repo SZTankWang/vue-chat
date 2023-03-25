@@ -15,12 +15,13 @@ loginState.$subscribe((mutation,state)=>{
     switch(state.currState){
         case "Loading":
             isLoading.value = true;
+            isFailed.value = false;
             break 
         case "Welcome":
             isLoading.value = false;
             isSuccess.value = true;
             break 
-        case "Failed":
+        case "Wrong Password":
             isLoading.value = false;
             isFailed.value = true 
     }

@@ -1,5 +1,6 @@
 export interface buttonProps {
     height?:number;
     width?:number;
-    text:string 
+    text:string;
+    disabled:boolean 
 }

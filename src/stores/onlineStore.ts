@@ -19,6 +19,7 @@ export const useOnlineStore = defineStore("online",{
         },
         setId(id:string){
             this.id = id;
+
         },
         setTalkingTo(id:string){
             console.log("settalkingto:",id)

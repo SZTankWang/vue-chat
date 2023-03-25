@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useOnlineStore } from '@/stores/onlineStore';
-
+import { computed } from '@vue/reactivity';
 const onlineStore = useOnlineStore()
-
 </script>
 
 <template>
     <div class="header-container">
+        
         <div class="icon">
             <div class="status" :class="{
                 online:onlineStore.isOnline,
@@ -35,15 +35,20 @@ const onlineStore = useOnlineStore()
         border-radius: 50%;
         position:absolute;
         left:16px;
+        text-align: center;
         background-color: antiquewhite;
+    }
+    .icon>span{
+        margin-top:3px;
     }
     .status{
         width:5px;
         height:5px;
         border-radius: 50%;
         position:relative;
-        top: 79%;
+        top: 80%;
         left: 90%;
+        
     }
     .offline{
         background-color:var(--light-grey) ;
